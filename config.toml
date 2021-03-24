@@ -28,10 +28,10 @@ googleAnalytics = ""
 	keywords = ["hugo","vitae","theme","static","blog"]
 
 	# Add meta description in head part
-	description = "This is Zemel's blog site."
+	description = "This is Siahk's blog site."
 
 	# Add pagetitle to homepage <title> tag
-	pagetitle = "Zemel'Blog"
+	pagetitle = "Siahk'Blog"
 
 	# Add a subtitle to your website
 	subtitle = "Later equals never."

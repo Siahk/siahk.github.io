@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.82.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Spring 01"><meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="1. Spring Spring是一个开源的轻量级、非入侵式的控制反转（IOC）、面向切片编程（AOP）的免费框架。
+<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.82.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Spring 01"><meta name=keywords content="Spring,IOC"><meta name=description content="1. Spring Spring是一个开源的轻量级、非入侵式的控制反转（IOC）、面向切片编程（AOP）的免费框架。
 1.1. Spring Boot 快速开发的脚手架。 基于SpringBoot可以快速的开发单个微服务。 约定大于配置。
 弊端：发展太久，配置十分繁琐
 导入包： …"><meta property="og:title" content="Spring 01"><meta property="og:description" content="1. Spring Spring是一个开源的轻量级、非入侵式的控制反转（IOC）、面向切片编程（AOP）的免费框架。
@@ -53,4 +53,94 @@
 </code></pre></div><h2 id=43-import>4.3. import</h2><p>一般用于团队开发使用，他可以将多个配置文件导入合并为一个。</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>    <span style=color:#070>&lt;import</span> <span style=color:#00c>resource=</span><span style=background-color:#fff0f0>&#34;beans2.xml&#34;</span><span style=color:#070>/&gt;</span>
     <span style=color:#070>&lt;import</span> <span style=color:#00c>resource=</span><span style=background-color:#fff0f0>&#34;beans.xml&#34;</span><span style=color:#070>/&gt;</span>
     <span style=color:#070>&lt;import</span> <span style=color:#00c>resource=</span><span style=background-color:#fff0f0>&#34;beans3.xml&#34;</span><span style=color:#070>/&gt;</span>
-</code></pre></div><h1 id=5-依赖注入>5. 依赖注入</h1><h2 id=51-构造器注入>5.1. 构造器注入</h2><h2 id=52-set方式注入-重点>5.2. Set方式注入 【重点】</h2><h2 id=53-扩展方式注入>5.3. 扩展方式注入</h2></div></div></div></main><footer>© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a></footer></body></html>
+</code></pre></div><h1 id=5-依赖注入>5. 依赖注入</h1><h2 id=51-构造器注入>5.1. 构造器注入</h2><p><code>construct-args</code></p><h2 id=52-set方式注入-重点>5.2. Set方式注入 【重点】</h2><ul><li>依赖注入：Set注入<ul><li>依赖：Bean对象的创建依赖于容器</li><li>注入：Bean对象中的所有属性，由容器来注入</li></ul></li></ul><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;address&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.Address&#34;</span><span style=color:#070>&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;address&#34;</span> <span style=color:#00c>value=</span><span style=background-color:#fff0f0>&#34;西安&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#070>&lt;/bean&gt;</span>
+
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;student&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.Student&#34;</span><span style=color:#070>&gt;</span>
+        <span style=color:#888>&lt;!--        第一种，普通值注入，value--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;name&#34;</span> <span style=color:#00c>value=</span><span style=background-color:#fff0f0>&#34;qinjiang&#34;</span><span style=color:#070>/&gt;</span>
+        <span style=color:#888>&lt;!--        第二种，bean注入，ref--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;address&#34;</span> <span style=color:#00c>ref=</span><span style=background-color:#fff0f0>&#34;address&#34;</span><span style=color:#070>/&gt;</span>
+        <span style=color:#888>&lt;!--        数组注入，ref--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;books&#34;</span><span style=color:#070>&gt;</span>
+            <span style=color:#070>&lt;array&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>红楼梦<span style=color:#070>&lt;/value&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>西游记<span style=color:#070>&lt;/value&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>水浒传<span style=color:#070>&lt;/value&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>三国演义<span style=color:#070>&lt;/value&gt;</span>
+            <span style=color:#070>&lt;/array&gt;</span>
+        <span style=color:#070>&lt;/property&gt;</span>
+        <span style=color:#888>&lt;!--        List--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;hobbys&#34;</span><span style=color:#070>&gt;</span>
+            <span style=color:#070>&lt;list&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>music<span style=color:#070>&lt;/value&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>movie<span style=color:#070>&lt;/value&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>picture<span style=color:#070>&lt;/value&gt;</span>
+            <span style=color:#070>&lt;/list&gt;</span>
+        <span style=color:#070>&lt;/property&gt;</span>
+        <span style=color:#888>&lt;!--        Map--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;card&#34;</span><span style=color:#070>&gt;</span>
+            <span style=color:#070>&lt;map&gt;</span>
+                <span style=color:#070>&lt;entry</span> <span style=color:#00c>key=</span><span style=background-color:#fff0f0>&#34;身份证&#34;</span> <span style=color:#00c>value=</span><span style=background-color:#fff0f0>&#34;123434324234&#34;</span><span style=color:#070>/&gt;</span>
+                <span style=color:#070>&lt;entry</span> <span style=color:#00c>key=</span><span style=background-color:#fff0f0>&#34;银行卡&#34;</span> <span style=color:#00c>value=</span><span style=background-color:#fff0f0>&#34;23425234234234&#34;</span><span style=color:#070>/&gt;</span>
+            <span style=color:#070>&lt;/map&gt;</span>
+        <span style=color:#070>&lt;/property&gt;</span>
+        <span style=color:#888>&lt;!--        Set--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;games&#34;</span><span style=color:#070>&gt;</span>
+            <span style=color:#070>&lt;set&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>LOL<span style=color:#070>&lt;/value&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>COC<span style=color:#070>&lt;/value&gt;</span>
+                <span style=color:#070>&lt;value&gt;</span>Dota<span style=color:#070>&lt;/value&gt;</span>
+            <span style=color:#070>&lt;/set&gt;</span>
+        <span style=color:#070>&lt;/property&gt;</span>
+        <span style=color:#888>&lt;!--        null--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;wife&#34;</span><span style=color:#070>&gt;</span>
+            <span style=color:#070>&lt;null/&gt;</span>
+        <span style=color:#070>&lt;/property&gt;</span>
+        <span style=color:#888>&lt;!--        Properties--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;info&#34;</span><span style=color:#070>&gt;</span>
+            <span style=color:#070>&lt;props&gt;</span>
+                <span style=color:#070>&lt;prop</span> <span style=color:#00c>key=</span><span style=background-color:#fff0f0>&#34;xuehao&#34;</span><span style=color:#070>&gt;</span>31400029<span style=color:#070>&lt;/prop&gt;</span>
+                <span style=color:#070>&lt;prop</span> <span style=color:#00c>key=</span><span style=background-color:#fff0f0>&#34;sex&#34;</span><span style=color:#070>&gt;</span>man<span style=color:#070>&lt;/prop&gt;</span>
+                <span style=color:#070>&lt;prop</span> <span style=color:#00c>key=</span><span style=background-color:#fff0f0>&#34;username&#34;</span><span style=color:#070>&gt;</span>root<span style=color:#070>&lt;/prop&gt;</span>
+                <span style=color:#070>&lt;prop</span> <span style=color:#00c>key=</span><span style=background-color:#fff0f0>&#34;password&#34;</span><span style=color:#070>&gt;</span>123456<span style=color:#070>&lt;/prop&gt;</span>
+            <span style=color:#070>&lt;/props&gt;</span>
+        <span style=color:#070>&lt;/property&gt;</span>
+    <span style=color:#070>&lt;/bean&gt;</span>
+</code></pre></div><h2 id=53-扩展方式注入>5.3. 扩展方式注入</h2><h3 id=531-p-nameworkspace>5.3.1. p-nameworkspace</h3><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#579>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style=color:#070>&lt;beans</span> <span style=color:#00c>xmlns=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style=color:#00c>xmlns:xsi=</span><span style=background-color:#fff0f0>&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style=color:#00c>xmlns:p=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/p&#34;</span>
+       <span style=color:#00c>xmlns:c=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/c&#34;</span>
+       <span style=color:#00c>xsi:schemaLocation=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style=color:#070>&gt;</span>
+
+    <span style=color:#888>&lt;!-- p命名空间注入，可以直接注入属性的值: property--&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;user&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.User&#34;</span> <span style=color:#00c>p:name=</span><span style=background-color:#fff0f0>&#34;qinjiang&#34;</span> <span style=color:#00c>p:age=</span><span style=background-color:#fff0f0>&#34;18&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#888>&lt;!-- c命名空间注入，通过构造器注入：construct-args--&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;user2&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.User&#34;</span> <span style=color:#00c>c:age=</span><span style=background-color:#fff0f0>&#34;18&#34;</span> <span style=color:#00c>c:name=</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span><span style=color:#070>/&gt;</span>
+
+
+<span style=color:#070>&lt;/beans&gt;</span>
+</code></pre></div><h3 id=532-c-nameworkspace>5.3.2. c-nameworkspace</h3><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#579>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style=color:#070>&lt;beans</span> <span style=color:#00c>xmlns=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style=color:#00c>xmlns:xsi=</span><span style=background-color:#fff0f0>&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style=color:#00c>xmlns:p=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/p&#34;</span>
+       <span style=color:#00c>xmlns:c=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/c&#34;</span>
+       <span style=color:#00c>xsi:schemaLocation=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style=color:#070>&gt;</span>
+
+    <span style=color:#888>&lt;!-- p命名空间注入，可以直接注入属性的值: property--&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;user&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.User&#34;</span> <span style=color:#00c>p:name=</span><span style=background-color:#fff0f0>&#34;qinjiang&#34;</span> <span style=color:#00c>p:age=</span><span style=background-color:#fff0f0>&#34;18&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#888>&lt;!-- c命名空间注入，通过构造器注入：construct-args--&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;user2&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.User&#34;</span> <span style=color:#00c>c:age=</span><span style=background-color:#fff0f0>&#34;18&#34;</span> <span style=color:#00c>c:name=</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span><span style=color:#070>/&gt;</span>
+
+
+<span style=color:#070>&lt;/beans&gt;</span>
+</code></pre></div><h3 id=测试>测试</h3><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>    <span style=color:#555;font-weight:700>@Test</span>
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>test2</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        ApplicationContext context <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> ClassPathXmlApplicationContext<span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;userbeans.xml&#34;</span><span style=color:#333>);</span>
+        User user <span style=color:#333>=</span> context<span style=color:#333>.</span><span style=color:#00c>getBean</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;user2&#34;</span><span style=color:#333>,</span> User<span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>);</span>
+        System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span>user<span style=color:#333>);</span>
+    <span style=color:#333>}</span>
+</code></pre></div><h1 id=6-bean-的作用域>6. Bean 的作用域</h1><h2 id=bean>Bean</h2></div><div class=tags><div class=taxosfloating_left><p>Tags</p></div><div class=termsfloating_right><p><a href=/tags/ioc/>ioc</a>
+<a href=/tags/spring/>spring</a></p></div><div class=clearit></div></div></div></main><footer>© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a></footer></body></html>

@@ -142,5 +142,167 @@
         User user <span style=color:#333>=</span> context<span style=color:#333>.</span><span style=color:#00c>getBean</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;user2&#34;</span><span style=color:#333>,</span> User<span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>);</span>
         System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span>user<span style=color:#333>);</span>
     <span style=color:#333>}</span>
-</code></pre></div><h1 id=6-bean-的作用域>6. Bean 的作用域</h1><h2 id=bean>Bean</h2></div><div class=tags><div class=taxosfloating_left><p>Tags</p></div><div class=termsfloating_right><p><a href=/tags/ioc/>ioc</a>
+</code></pre></div><h1 id=6-beanscope>6. Bean&rsquo;Scope</h1><table><thead><tr><th style=text-align:center>Scope</th><th>Description</th></tr></thead><tbody><tr><td style=text-align:center>singleton</td><td>(Default) Scopes a single bean definition to a single object instance for each Spring IoC container.</td></tr><tr><td style=text-align:center>prototype</td><td>Scopes a single bean definition to any number of object instances.</td></tr><tr><td style=text-align:center>request</td><td>Scopes a single bean definition to the lifecycle of a single HTTP request. That is, each HTTP request has its own instance of a bean created off the back of a single bean definition. Only valid in the context of a web-aware Spring ApplicationContext.</td></tr><tr><td style=text-align:center>session</td><td>Scopes a single bean definition to the lifecycle of an HTTP <code>Session</code>. Only valid in the context of a web-aware Spring <code>ApplicationContext</code>.</td></tr><tr><td style=text-align:center>application</td><td>Scopes a single bean definition to the lifecycle of a <code>ServletContext</code>. Only valid in the context of a web-aware Spring <code>ApplicationContext</code>.</td></tr><tr><td style=text-align:center>websocket</td><td>Scopes a single bean definition to the lifecycle of a <code>WebSocket</code>. Only valid in the context of a web-aware Spring <code>ApplicationContext</code>.</td></tr><tr><td style=text-align:center></td><td></td></tr></tbody></table><h2 id=61-bean-singleton-mode-单例模式spring默认机制>6.1. Bean singleton mode (单例模式：Spring默认机制)</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;user2&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.User&#34;</span> <span style=color:#00c>c:age=</span><span style=background-color:#fff0f0>&#34;18&#34;</span> <span style=color:#00c>c:name=</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span> <span style=color:#00c>scope=</span><span style=background-color:#fff0f0>&#34;singleton&#34;</span><span style=color:#070>/&gt;</span>
+</code></pre></div><h2 id=62-bean-prototype-mode-原型模式每次获取的都是新对象>6.2. Bean prototype mode （原型模式：每次获取的都是新对象）</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;user3&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.User&#34;</span> <span style=color:#00c>c:age=</span><span style=background-color:#fff0f0>&#34;18&#34;</span> <span style=color:#00c>c:name=</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span> <span style=color:#00c>scope=</span><span style=background-color:#fff0f0>&#34;prototype&#34;</span><span style=color:#070>/&gt;</span>
+</code></pre></div><h2 id=63-其余requestsessionapplication只在web开发中使用>6.3. 其余：request、session、application，只在web开发中使用</h2><h1 id=7-bean-的自动装配>7. Bean 的自动装配</h1><ul><li>自动装配是Spring满足Bean依赖一种方式。</li><li>Spring会在上下文中自动寻找，并自动给bean装配属性。</li></ul><ol><li><p>xml中显示的配置</p></li><li><p>java中显示配置</p></li><li><p>隐式的自动装配bean【重要】</p></li></ol><h2 id=71-测试>7.1. 测试</h2><p>环境搭建：一个人有两个宠物</p><h2 id=72-自动装配byname>7.2. 自动装配：byName</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;cat&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.Cat&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;dog&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.Dog&#34;</span><span style=color:#070>/&gt;</span>
+<span style=color:#888>&lt;!--
+</span><span style=color:#888>    byName: 会自动在容器的上下文中查找和自己对象set方法后面的值对应的 beanid。
+</span><span style=color:#888>--&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;people&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.People&#34;</span> <span style=color:#00c>autowire=</span><span style=background-color:#fff0f0>&#34;byName&#34;</span><span style=color:#070>&gt;</span>
+<span style=color:#888>&lt;!--        &lt;property name=&#34;cat&#34; ref=&#34;cat&#34;/&gt;--&gt;</span>
+<span style=color:#888>&lt;!--        &lt;property name=&#34;dog&#34; ref=&#34;dog&#34;/&gt;--&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;name&#34;</span> <span style=color:#00c>value=</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#070>&lt;/bean&gt;</span>
+</code></pre></div><h2 id=73-自动装配bytype>7.3. 自动装配：byType</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>    <span style=color:#070>&lt;bean</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.Cat&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.Dog&#34;</span><span style=color:#070>/&gt;</span>
+<span style=color:#888>&lt;!--
+</span><span style=color:#888>    byType: 会自动在容器的上下文中查找和自己对象属性类型相同的 beanid。
+</span><span style=color:#888>--&gt;</span>
+    <span style=color:#070>&lt;bean</span> <span style=color:#00c>id=</span><span style=background-color:#fff0f0>&#34;people&#34;</span> <span style=color:#00c>class=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo.People&#34;</span> <span style=color:#00c>autowire=</span><span style=background-color:#fff0f0>&#34;byType&#34;</span><span style=color:#070>&gt;</span>
+        <span style=color:#070>&lt;property</span> <span style=color:#00c>name=</span><span style=background-color:#fff0f0>&#34;name&#34;</span> <span style=color:#00c>value=</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#070>&lt;/bean&gt;</span>
+</code></pre></div><h2 id=小结>小结</h2><ul><li>byName：需要保证id唯一，bean的id需要于set方法的值唯一。</li><li>byType：保证类型唯一，bean的属性的类型一致。</li></ul><hr><h2 id=74-使用注解实现自动装配>7.4. 使用注解实现自动装配</h2><p>使用注解须知：</p><ol><li>导入约束：context约束</li><li>== 配置注解的支持：<code>&lt;context:annotation-config/></code> == 重要 ==</li></ol><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#579>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style=color:#070>&lt;beans</span> <span style=color:#00c>xmlns=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans&#34;</span>
+   <span style=color:#00c>xmlns:xsi=</span><span style=background-color:#fff0f0>&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+   <span style=color:#00c>xmlns:context=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/context&#34;</span>
+   <span style=color:#00c>xsi:schemaLocation=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans
+</span><span style=background-color:#fff0f0>       https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style=background-color:#fff0f0>       http://www.springframework.org/schema/context
+</span><span style=background-color:#fff0f0>       https://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style=color:#070>&gt;</span>
+
+   <span style=color:#070>&lt;context:annotation-config/&gt;</span>
+
+<span style=color:#070>&lt;/beans&gt;</span>
+</code></pre></div><p><strong>@Autowired</strong></p><ol><li>直接在属性上使用，也可以在set方式上使用。</li><li>使用Autowired可以不编写Set方法，前提是自动装配的属性在IOC容器中存在，且符合名字byName。</li></ol><p>如果 <strong>@Autowired</strong> 自动装配的环境比较复杂，可以通过 <strong>@Qualifier(value=&ldquo;ex&rdquo;)</strong> 配合使用，指定一个唯一一个bean对象注入。</p><p><strong>@Resource</strong></p><p>小结： <strong>@Autowired</strong> 和 <strong>@Resource</strong> 的区别</p><ul><li>用于自动装配，放在属性段上。</li><li><strong>@Autowired</strong> 通过byname的方式实现； <strong>@Resource</strong> 通过byName的方式实现，如果找不到则通过byType实现，两个都找不到的情况下，就报错。</li><li>执行顺序不同： <strong>@Autowired</strong> 通过类型、名字； <strong>@Resource</strong> 通过名字、类型。</li></ul><h1 id=8-注解开发>8. 注解开发</h1><p>使用Spring的注解开发，必须保证Aop的包导入。</p><p>使用注解需要导入context约束，增加注解的支持。</p><p>代码：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml> <span style=color:#579>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style=color:#070>&lt;beans</span> <span style=color:#00c>xmlns=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style=color:#00c>xmlns:xsi=</span><span style=background-color:#fff0f0>&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style=color:#00c>xmlns:context=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/context&#34;</span>
+    <span style=color:#00c>xsi:schemaLocation=</span><span style=background-color:#fff0f0>&#34;http://www.springframework.org/schema/beans
+</span><span style=background-color:#fff0f0>        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style=background-color:#fff0f0>        http://www.springframework.org/schema/context
+</span><span style=background-color:#fff0f0>        https://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style=color:#070>&gt;</span>
+
+    <span style=color:#070>&lt;context:annotation-config/&gt;</span>
+
+<span style=color:#070>&lt;/beans&gt;</span>
+</code></pre></div><h2 id=81-bean>8.1. bean</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>//等价于 &lt;bean id=&#34;user&#34; class=&#34;com.siahk.dao.User&#34;/&gt;
+</span><span style=color:#888>//Component: 组件
+</span><span style=color:#888></span>
+<span style=color:#555;font-weight:700>@Component</span>
+<span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>User</span> <span style=color:#333>{</span>
+    <span style=color:#080;font-weight:700>public</span> String name <span style=color:#333>=</span> <span style=background-color:#fff0f0>&#34;qinjiang&#34;</span><span style=color:#333>;</span>
+<span style=color:#333>}</span>
+</code></pre></div><h2 id=82-属性如何注入>8.2. 属性如何注入</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>User</span> <span style=color:#333>{</span>
+
+    <span style=color:#888>// 相当于 &lt;property name=&#34;name&#34; value=&#34;kuangshen&#34;/&gt;
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Value</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span><span style=color:#333>)</span>
+    <span style=color:#080;font-weight:700>public</span> String name<span style=color:#333>;</span>
+<span style=color:#333>}</span>
+</code></pre></div><h2 id=83-衍生的注解>8.3. 衍生的注解</h2><p><strong>@Component</strong> 有几个衍生注解，在web开发中，会按照mvc三层构架分层。</p><ul><li>dao: <strong>@Repository</strong></li><li>service: <strong>@Service</strong></li><li>controller: <strong>@Controller</strong></li></ul><p>功能一样，将类注册到容器中，装配 Bean</p><h2 id=84-自动装配>8.4. 自动装配</h2><ul><li><strong>@Autowired</strong>：自动装配通过类型、名字；如果 <strong>@Autowired</strong> 自动装配的环境比较复杂，可以通过 <strong>@Qualifier(value=&ldquo;ex&rdquo;)</strong> 配合使用，指定一个唯一一个bean对象注入。</li><li><strong>@Nullable</strong>：字段标记了这个注解，说明这个字段可以为Null。</li><li><strong>@Resource</strong>：自动装配通过名字、类型。</li></ul><h2 id=85-作用域>8.5. 作用域</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#555;font-weight:700>@Component</span>
+<span style=color:#555;font-weight:700>@Scope</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;singleton&#34;</span><span style=color:#333>)</span>
+<span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>User</span> <span style=color:#333>{</span>
+
+    <span style=color:#888>// 相当于 &lt;property name=&#34;name&#34; value=&#34;kuangshen&#34;/&gt;
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Value</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;kuangshen&#34;</span><span style=color:#333>)</span>
+    <span style=color:#080;font-weight:700>public</span> String name<span style=color:#333>;</span>
+<span style=color:#333>}</span>
+</code></pre></div><h2 id=86-小结>8.6. 小结</h2><ul><li>xml 和 注解<ul><li>xml更加万能，适用于任何场景，维护简单方便。</li><li>注解不是自己的类使用不了，维护相对复杂。</li></ul></li><li>xml 与 注解 的最佳实践<ul><li>xml 用来管理bean；</li><li>注解只负责完成属性的注入；</li><li>使用过程中需要注意一个问题：让注解生效，就需要开启注解的支持。</li></ul></li></ul><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#888>&lt;!--    指定要扫描的包，这个包下的注解就会生效。--&gt;</span>
+    <span style=color:#070>&lt;context:component-scan</span> <span style=color:#00c>base-package=</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo&#34;</span><span style=color:#070>/&gt;</span>
+    <span style=color:#070>&lt;context:annotation-config/&gt;</span>
+</code></pre></div><h1 id=9-使用java的方式配置spring>9. 使用Java的方式配置Spring</h1><p>不使用Spring的xml配置，全权交给java做。</p><p>实体类：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>User</span> <span style=color:#333>{</span>
+    <span style=color:#080;font-weight:700>private</span> String name<span style=color:#333>;</span>
+
+    <span style=color:#080;font-weight:700>public</span> String <span style=color:#06b;font-weight:700>getName</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        <span style=color:#080;font-weight:700>return</span> name<span style=color:#333>;</span>
+    <span style=color:#333>}</span>
+
+    <span style=color:#555;font-weight:700>@Value</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;Qinjiang&#34;</span><span style=color:#333>)</span> <span style=color:#888>//属性注入值
+</span><span style=color:#888></span>    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>setName</span><span style=color:#333>(</span>String name<span style=color:#333>)</span> <span style=color:#333>{</span>
+        <span style=color:#080;font-weight:700>this</span><span style=color:#333>.</span><span style=color:#00c>name</span> <span style=color:#333>=</span> name<span style=color:#333>;</span>
+    <span style=color:#333>}</span>
+
+    <span style=color:#555;font-weight:700>@Override</span>
+    <span style=color:#080;font-weight:700>public</span> String <span style=color:#06b;font-weight:700>toString</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        <span style=color:#080;font-weight:700>return</span> <span style=background-color:#fff0f0>&#34;User{&#34;</span> <span style=color:#333>+</span>
+                <span style=background-color:#fff0f0>&#34;name=&#39;&#34;</span> <span style=color:#333>+</span> name <span style=color:#333>+</span> <span style=color:#04d;background-color:#fff0f0>&#39;\&#39;&#39;</span> <span style=color:#333>+</span>
+                <span style=color:#04d;background-color:#fff0f0>&#39;}&#39;</span><span style=color:#333>;</span>
+    <span style=color:#333>}</span>
+<span style=color:#333>}</span>
+
+</code></pre></div><p>测试类：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>MyTest</span> <span style=color:#333>{</span>
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>static</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>main</span><span style=color:#333>(</span>String<span style=color:#333>[]</span> args<span style=color:#333>)</span> <span style=color:#333>{</span>
+
+        <span style=color:#888>// 如果完全使用了配置类方式去做，就只能通过 AnnotationConfig 上下文来获取容器，通过配置类的class对象加载。
+</span><span style=color:#888></span>        ApplicationContext context <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> AnnotationConfigApplicationContext<span style=color:#333>(</span>SiahkConfig<span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>);</span>
+
+        User getUser <span style=color:#333>=</span> context<span style=color:#333>.</span><span style=color:#00c>getBean</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;user&#34;</span><span style=color:#333>,</span> User<span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>);</span>
+        System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span>getUser<span style=color:#333>.</span><span style=color:#00c>getName</span><span style=color:#333>());</span>
+    <span style=color:#333>}</span>
+<span style=color:#333>}</span>
+</code></pre></div><p>配置文件：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// 这个也会被Spring容器托管，注册到容器中，因为它也是一个@Component。
+</span><span style=color:#888>// @Configuration 代表这是一个配置类，和bean.xml是一样的。
+</span><span style=color:#888></span><span style=color:#555;font-weight:700>@Configuration</span>
+<span style=color:#555;font-weight:700>@Component</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;com.siahk.pojo&#34;</span><span style=color:#333>)</span>
+<span style=color:#555;font-weight:700>@Import</span><span style=color:#333>(</span>com<span style=color:#333>.</span><span style=color:#00c>siahk</span><span style=color:#333>.</span><span style=color:#00c>pojo</span><span style=color:#333>.</span><span style=color:#00c>config</span><span style=color:#333>.</span><span style=color:#00c>SiahkConfig2</span><span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>)</span>
+<span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>SiahkConfig</span> <span style=color:#333>{</span>
+
+    <span style=color:#888>// 注册一个Bean就相当于之前写的一个Bean标签。
+</span><span style=color:#888></span>    <span style=color:#888>// 这个方法的名字就相当于bean标签中的id属性。
+</span><span style=color:#888></span>    <span style=color:#888>// 这个方法的返回值，就相当于bean标签中的class属性。
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Bean</span>
+    <span style=color:#080;font-weight:700>public</span> User <span style=color:#06b;font-weight:700>user</span><span style=color:#333>(){</span>
+        <span style=color:#080;font-weight:700>return</span> <span style=color:#080;font-weight:700>new</span> User<span style=color:#333>();</span> <span style=color:#888>// 就是返回要注入到bean的对象。
+</span><span style=color:#888></span>    <span style=color:#333>}</span>
+<span style=color:#333>}</span>
+</code></pre></div><p>这种纯Java的配置方式，在Springboot中随处可见。</p><h1 id=10-代理模式>10. 代理模式</h1><h2 id=101-静态代理>10.1 静态代理</h2><p>角色分析：</p><ul><li>抽象角色：一般会使用接口或抽象类解决。</li><li>真实角色：被代理的角色。</li><li>代理角色：代理真实角色，代理真实角色后，我们一般会做一些附属操作。</li><li>客户：访问代理对象的人。</li></ul><p>代码步骤（租房例子）：</p><ol><li>接口</li></ol><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>interface</span> <span style=color:#b06;font-weight:700>Rent</span> <span style=color:#333>{</span>
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>rent</span><span style=color:#333>();</span>
+<span style=color:#333>}</span>
+</code></pre></div><ol start=2><li>真实角色</li></ol><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>Host</span> <span style=color:#080;font-weight:700>implements</span> Rent <span style=color:#333>{</span>
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>rent</span><span style=color:#333>(){</span>
+        System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;房东要出租房子&#34;</span><span style=color:#333>);</span>
+    <span style=color:#333>}</span>
+<span style=color:#333>}</span>
+</code></pre></div><ol start=3><li>代理角色</li></ol><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>Proxy</span> <span style=color:#080;font-weight:700>implements</span> Rent <span style=color:#333>{</span>
+    <span style=color:#080;font-weight:700>private</span> Host host<span style=color:#333>;</span>
+
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#06b;font-weight:700>Proxy</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+    <span style=color:#333>}</span>
+
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#06b;font-weight:700>Proxy</span><span style=color:#333>(</span>Host host<span style=color:#333>)</span> <span style=color:#333>{</span>
+        <span style=color:#080;font-weight:700>this</span><span style=color:#333>.</span><span style=color:#00c>host</span> <span style=color:#333>=</span> host<span style=color:#333>;</span>
+    <span style=color:#333>}</span>
+
+    <span style=color:#555;font-weight:700>@Override</span>
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>rent</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        host<span style=color:#333>.</span><span style=color:#00c>rent</span><span style=color:#333>();</span>
+        System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;中介出租房子&#34;</span><span style=color:#333>);</span>
+    <span style=color:#333>}</span>
+
+    <span style=color:#888>// 看房
+</span><span style=color:#888></span>    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>seeHouse</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;Proxy seeHouse.&#34;</span><span style=color:#333>);</span>
+    <span style=color:#333>}</span>
+
+    <span style=color:#888>// 合同
+</span><span style=color:#888></span>    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>hetong</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;hetong&#34;</span><span style=color:#333>);</span>
+    <span style=color:#333>}</span>
+
+    <span style=color:#888>// 中介费
+</span><span style=color:#888></span>    <span style=color:#080;font-weight:700>public</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>fare</span><span style=color:#333>(){</span>
+        System<span style=color:#333>.</span><span style=color:#00c>out</span><span style=color:#333>.</span><span style=color:#00c>println</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;fare&#34;</span><span style=color:#333>);</span>
+    <span style=color:#333>}</span>
+<span style=color:#333>}</span>
+</code></pre></div><ol start=4><li>客户端访问代理角色</li></ol><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>Client</span> <span style=color:#333>{</span>
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>static</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>main</span><span style=color:#333>(</span>String<span style=color:#333>[]</span> args<span style=color:#333>)</span> <span style=color:#333>{</span>
+        Host host <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> Host<span style=color:#333>();</span>
+        <span style=color:#888>// 代理,中介帮房东出租房子，但是代理角色一般会有一些附属操作。
+</span><span style=color:#888></span>        Proxy proxy <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> Proxy<span style=color:#333>(</span>host<span style=color:#333>);</span>
+
+        <span style=color:#888>// 不用面对房东，直接找中介租房即可。
+</span><span style=color:#888></span>        proxy<span style=color:#333>.</span><span style=color:#00c>rent</span><span style=color:#333>();</span>
+    <span style=color:#333>}</span>
+<span style=color:#333>}</span>
+</code></pre></div><p>代理模式的好处：</p><ul><li>可以使真实角色的操作更加存粹，不用去关注一些公共业务。</li><li>公共业务就交给代理角色，实现了业务的分工。</li><li>公共业务发生扩展的时候，方便集中管理。</li></ul><p>缺点：</p><ul><li>一个真实角色就会产生一个代理角色；代码量会翻倍，开发效率会变低。</li></ul><h2 id=102-加深理解>10.2 加深理解</h2></div><div class=tags><div class=taxosfloating_left><p>Tags</p></div><div class=termsfloating_right><p><a href=/tags/ioc/>ioc</a>
 <a href=/tags/spring/>spring</a></p></div><div class=clearit></div></div></div></main><footer>© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a></footer></body></html>

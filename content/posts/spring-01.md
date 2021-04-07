@@ -52,7 +52,7 @@ Spring是一个开源的轻量级、非入侵式的控制反转（IOC）、面�
 
 # 3. 创建对象的方式
 
-## 3.1. 下标赋值
+## 3.1. 下标赋值 
 
 ```xml
 <bean id="user" class="com.siahk.User">
@@ -96,12 +96,12 @@ Spring是一个开源的轻量级、非入侵式的控制反转（IOC）、面�
 -->
     <bean id="userT" class="com.siahk.pojo.UserT" name="userT2，userT3">
         <property name="name" value="西部开源"/>
-    </bean>
+    </bean>  
 ```
 
 ## 4.3. import
 
-一般用于团队开发使用，他可以将多个配置文件导入合并为一个。
+一般用于团  队开发使用，他可以将多个配置文件导入合并为一个。
 
 ```xml
     <import resource="beans2.xml"/>
@@ -572,3 +572,105 @@ public class Client {
 - 一个真实角色就会产生一个代理角色；代码量会翻倍，开发效率会变低。
 
 ## 10.2 加深理解
+
+## 10.3 动态代理
+
+- 动态代理静态代理角色一样，
+- 动态代理的代理类是动态生成的，不是我们直接写好的。
+- 动态代理也分为两大类：基于接口的动态代理；基于类的动态代理。
+    - 基于接口--JDK 动态代理
+    - 基于类： cglib
+    - java字节码实现：javasist
+
+需要了解两个类：Proxy（代理），InvocationHandler（调用处理程序）
+
+动态代理的好处：
+- 可以使真实角色的操作更加存粹，不用去关注一些公共业务。
+- 公共业务就交给代理角色，实现了业务的分工。
+- 公共业务发生扩展的时候，方便集中管理。
+- 一个动态代理类代理的是一个接口，一般就是对应一类业务。
+- 一个动态代理类可以代理多个类，只要是实现了同一个接口即可。
+
+# 11. AOP
+
+ 
+## 11.2. Aop在Spring中的作用
+提供声明式事务：允许用户自定义切面
+- 横切关注点：跨越应用程序多个模块的方法和功能，即是，与我们的业务逻辑无关的，但是我们需要关注的部分，就是横切关注点。入日志，安全，缓存，事务等等……
+- 切面（ASPECT）：横切关注点被模块化的特殊对象。即，它是一个类。
+- 通知（Advice）：切面必须要完成的工作，即，它是类中的一个方法。
+- 目标（Target）：被通知对象。
+- 代理（Proxy）：向目标对象应用通知之后创建的对象。
+- 切入点（PointCut）：切面通知执行的“地点”的定义。
+- 连接点（JoinPoint）：与切入点匹配的执行点。
+
+SpringAOP中，通过Advice定义横切逻辑，Spring中支持5中类型的Advice：
+<br/>
+| 通知类型 | 连接点 | 实现接口 |
+| :---: | :---: | :---|
+| 前置通知 | 方法前 | org.springframework.aop.MethodBeforeAdvice |
+| 后置通知 | 方法后 | org.springframework.aop.AfterReturningAdvice |
+| 环绕通知 | 方法前后 | org.aopalliance.intercept.MethodInterceptor |
+| 异常抛出通知 | 方法抛出异常 | org.springframework.aop.ThrowsAdvice |
+| 引介通知 | 类中增加新的方法属性 | org.springframework.aop.IntroductionInterceptor |
+
+即 Aop 在不改变原有代码的情况下，去增加新的功能。
+
+## 11.3. 使用Spring实现Aop
+【重点】使用AOP植入，需要导入一个依赖包。
+```xml
+<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+<dependency>
+    <groupId>org.aspectj</artifactId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.9.4</version>
+</dependency>
+```
+
+方式一：使用Spring的API接口【主要SpringAPI接口实现】
+
+方式二：自定义来实现AOP【主要是切面定义】
+
+方式三：使用注解实现
+
+# 12. 整合Mybatis
+步骤：
+1. 导入相关jar包
+    - junit
+    - mybatis
+    - mysql数据库
+    - spring相关的
+    - aop织入
+    - mybtis-spring
+2. 编写配置文件
+3. 测试
+
+## 12.1. 回忆mybatis
+
+1. 编写实体类
+2. 编写核心配置文件
+3. 编写接口
+4. 编写Mapper.xml
+5. 测试
+
+## 12.2. 
+
+
+# 13. 声明式事务
+
+## 13.1. 回顾事务
+
+- 把一组业务当成一个业务来做；要么都成功，要么都失败。
+- 事务在项目开发中，十分的重要，涉及到数据的一致性问题，不能马虎。
+- 确保完整性和一致性。
+
+事务ACID原则：
+
+- 原子性
+- 一致性
+- 隔离性
+    - 多个可能操作同一个资源，防止数据损坏。
+- 持久性
+    - 事务一旦提交，无论系统发生什么问题，结果都不会再被影响，被持久化的写道存储器中。
+
+## 13.2. 

@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Siahk'Blog</title><link>http://siahk.github.io/</link><description>Recent content on siahk.github.io</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© Copyright notice | Vitae theme for Hugo</copyright><lastBuildDate>Wed, 31 Mar 2021 13:38:44 +0800</lastBuildDate><atom:link href="http://siahk.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Mybatis</title><link>http://siahk.github.io/posts/mybatis/</link><pubDate>Wed, 31 Mar 2021 13:38:44 +0800</pubDate><guid>http://siahk.github.io/posts/mybatis/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Siahk'Blog</title><link>http://siahk.github.io/</link><description>Recent content on siahk.github.io</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© Copyright notice | Vitae theme for Hugo</copyright><lastBuildDate>Sun, 11 Apr 2021 14:20:18 +0800</lastBuildDate><atom:link href="http://siahk.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Socket</title><link>http://siahk.github.io/posts/socket/</link><pubDate>Sun, 11 Apr 2021 14:20:18 +0800</pubDate><guid>http://siahk.github.io/posts/socket/</guid><description>
+Socket 用法详解 1 构造 Socket 构造方法的重载方式
+Socket(); Socket(InetAddress address, int port) throws UnknownHostException, IOExpection; …</description></item><item><title>Springboot 01</title><link>http://siahk.github.io/posts/springboot-01/</link><pubDate>Tue, 06 Apr 2021 12:44:42 +0800</pubDate><guid>http://siahk.github.io/posts/springboot-01/</guid><description>
+微服务阶段 Javase：OOP
+mysql：持续化
+html+css+js+jquery+框架：视图，框架，框架不熟练，css不好；
+javaweb：独立开发MVC三层架构的网站：原始
+ssm：框架：简化了我们的开发流程
+war：tomcat 运行
+Spring再简 …</description></item><item><title>Mybatis</title><link>http://siahk.github.io/posts/mybatis/</link><pubDate>Wed, 31 Mar 2021 13:38:44 +0800</pubDate><guid>http://siahk.github.io/posts/mybatis/</guid><description>
 环境 JDK1.8 Mysql 5.7 Maven 3.6.1 IDEA 回顾 JDBC Mysql Java 基础 Maven Junit SSM 框架：配置文件的，最好的方式：看官方文档
 1 简介 1.1 什么是Mybatis MyBatis 是一款优秀的持久层框 …</description></item><item><title>JavaWeb</title><link>http://siahk.github.io/posts/javaweb/</link><pubDate>Wed, 31 Mar 2021 13:22:54 +0800</pubDate><guid>http://siahk.github.io/posts/javaweb/</guid><description>
 1 JavaWeb 1.1 基本概念 Web 开发：

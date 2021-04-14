@@ -1,0 +1,62 @@
+<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.82.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Springboot 01"><meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="微服务阶段 Javase：OOP
+mysql：持续化
+html+css+js+jquery+框架：视图，框架，框架不熟练，css不好；
+javaweb：独立开发MVC三层架构的网站：原始
+ssm：框架：简化了我们的开发流程
+war：tomcat 运行
+Spring再简 …"><meta property="og:title" content="Springboot 01"><meta property="og:description" content="微服务阶段 Javase：OOP
+mysql：持续化
+html+css+js+jquery+框架：视图，框架，框架不熟练，css不好；
+javaweb：独立开发MVC三层架构的网站：原始
+ssm：框架：简化了我们的开发流程
+war：tomcat 运行
+Spring再简化：Springboot-jar：内嵌tomcat； 微服务框架！
+服务越来越多：springcloud；
+第一个springboot程序 原理初探 自动配置：
+pom.xml
+ spring-boot-dependencies: 核心依赖在父工程中 我们在写或引入springboot依赖的时候，不需要指定版本，就是因为有这些仓库。  启动器
+  <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter</artifactId> </dependency>  启动器：就是springboot的启动场景； 例如spring-boot-starter-web，它就会自动导入web环境的所有依赖。 springboot会将所有场景都变成一个个的启动器。 要使用什么功能，就只需要找到对应的启动器，start  主程序
+// @SpringBootApplication：标注这个类是一个spingboot应用。 @SpringBootApplication public class Springboot01HelloworldApplication { public static void main(String[] args) { // 将spirngboot应用启动  SpringApplication.run(Springboot01HelloworldApplication.class, args); } }  注解   @SpringBootConfiguration // springboot的配置  @Configuration // spring配置类  @Component // 说明这也是一个spring的组件  @EnableAutoConfiguration // 自动配置  @AutoConfigurationPackage // 自动配置包  @Import(AutoConfigurationPackages."><meta property="og:type" content="article"><meta property="og:url" content="http://siahk.github.io/posts/springboot-01/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-04-06T12:44:42+08:00"><meta property="article:modified_time" content="2021-04-06T12:44:42+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Springboot 01"><meta name=twitter:description content="微服务阶段 Javase：OOP
+mysql：持续化
+html+css+js+jquery+框架：视图，框架，框架不熟练，css不好；
+javaweb：独立开发MVC三层架构的网站：原始
+ssm：框架：简化了我们的开发流程
+war：tomcat 运行
+Spring再简化：Springboot-jar：内嵌tomcat； 微服务框架！
+服务越来越多：springcloud；
+第一个springboot程序 原理初探 自动配置：
+pom.xml
+ spring-boot-dependencies: 核心依赖在父工程中 我们在写或引入springboot依赖的时候，不需要指定版本，就是因为有这些仓库。  启动器
+  <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter</artifactId> </dependency>  启动器：就是springboot的启动场景； 例如spring-boot-starter-web，它就会自动导入web环境的所有依赖。 springboot会将所有场景都变成一个个的启动器。 要使用什么功能，就只需要找到对应的启动器，start  主程序
+// @SpringBootApplication：标注这个类是一个spingboot应用。 @SpringBootApplication public class Springboot01HelloworldApplication { public static void main(String[] args) { // 将spirngboot应用启动  SpringApplication.run(Springboot01HelloworldApplication.class, args); } }  注解   @SpringBootConfiguration // springboot的配置  @Configuration // spring配置类  @Component // 说明这也是一个spring的组件  @EnableAutoConfiguration // 自动配置  @AutoConfigurationPackage // 自动配置包  @Import(AutoConfigurationPackages."><link rel=stylesheet type=text/css media=screen href=/css/normalize.css><link rel=stylesheet type=text/css media=screen href=/css/main.css><link rel=stylesheet type=text/css media=screen href=/css/all.css><link rel=stylesheet href=/css/katex.min.css crossorigin=anonymous><script defer src=/js/katex.min.js integrity=sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz crossorigin=anonymous></script><script defer src=/js/auto-render.min.js integrity=sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI crossorigin=anonymous onload=renderMathInElement(document.body)></script><title>Springboot 01 | Siahk'Blog</title></head><body><header><div id=avatar><a href=http://siahk.github.io/><img src=/images/%e5%a4%a7%e6%88%b7%e7%88%b1.jpg alt="Siahk'Blog"></a></div><div id=titletext><h2 id=title><a href=http://siahk.github.io/>Siahk'Blog</a></h2></div><div id=title-description><p id=subtitle>Later equals never.</p><div id=social><nav><ul><li><a href=https://github.com/Siahk><i title=Github class="icons fab fa-github"></i></a></li><li><a href=/index.xml><i title=RSS class="icons fas fa-rss"></i></a></li></ul></nav></div></div><div id=mainmenu><nav><ul><li><a href=/>Home</a></li><li><a href=/posts>Blogs</a></li><li><a href=/about>About</a></li><li><a href=/tags>Tags</a></li><li><a href=/categories>Categories</a></li></ul></nav></div></header><main><div class=post><div class=author></div><div class=post-header><div class=meta><div class=date><span class=day>06</span>
+<span class=rest>Apr 2021</span></div></div><div class=matter><h1 class=title>Springboot 01</h1></div></div><div class=markdown><h1 id=微服务阶段>微服务阶段</h1><p>Javase：OOP</p><p>mysql：持续化</p><p>html+css+js+jquery+框架：视图，框架，框架不熟练，css不好；</p><p>javaweb：独立开发MVC三层架构的网站：原始</p><p>ssm：框架：简化了我们的开发流程</p><p><strong>war：tomcat 运行</strong></p><p>Spring再简化：Springboot-jar：内嵌tomcat； 微服务框架！</p><p>服务越来越多：springcloud；</p><h1 id=第一个springboot程序>第一个springboot程序</h1><h1 id=原理初探>原理初探</h1><p>自动配置：</p><p><strong>pom.xml</strong></p><ul><li>spring-boot-dependencies: 核心依赖在父工程中</li><li>我们在写或引入springboot依赖的时候，不需要指定版本，就是因为有这些仓库。</li></ul><p><strong>启动器</strong></p><ul><li><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>      <span style=color:#070>&lt;dependency&gt;</span>
+          <span style=color:#070>&lt;groupId&gt;</span>org.springframework.boot<span style=color:#070>&lt;/groupId&gt;</span>
+          <span style=color:#070>&lt;artifactId&gt;</span>spring-boot-starter<span style=color:#070>&lt;/artifactId&gt;</span>
+      <span style=color:#070>&lt;/dependency&gt;</span>
+</code></pre></div></li><li>启动器：就是springboot的启动场景；</li><li>例如spring-boot-starter-web，它就会自动导入web环境的所有依赖。</li><li>springboot会将所有场景都变成一个个的启动器。</li><li>要使用什么功能，就只需要找到对应的启动器，<code>start</code></li></ul><p><strong>主程序</strong></p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// @SpringBootApplication：标注这个类是一个spingboot应用。
+</span><span style=color:#888></span><span style=color:#555;font-weight:700>@SpringBootApplication</span>
+<span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>Springboot01HelloworldApplication</span> <span style=color:#333>{</span>
+
+    <span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>static</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>main</span><span style=color:#333>(</span>String<span style=color:#333>[]</span> args<span style=color:#333>)</span> <span style=color:#333>{</span>
+        <span style=color:#888>// 将spirngboot应用启动
+</span><span style=color:#888></span>        SpringApplication<span style=color:#333>.</span><span style=color:#00c>run</span><span style=color:#333>(</span>Springboot01HelloworldApplication<span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>,</span> args<span style=color:#333>);</span>
+    <span style=color:#333>}</span>
+
+<span style=color:#333>}</span>
+</code></pre></div><ul><li>注解<ul><li><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#555;font-weight:700>@SpringBootConfiguration</span> <span style=color:#888>// springboot的配置
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Configuration</span> <span style=color:#888>// spring配置类
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Component</span> <span style=color:#888>// 说明这也是一个spring的组件
+</span><span style=color:#888></span>
+<span style=color:#555;font-weight:700>@EnableAutoConfiguration</span> <span style=color:#888>// 自动配置
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@AutoConfigurationPackage</span> <span style=color:#888>// 自动配置包
+</span><span style=color:#888></span>        <span style=color:#555;font-weight:700>@Import</span><span style=color:#333>(</span>AutoConfigurationPackages<span style=color:#333>.</span><span style=color:#00c>Registrar</span><span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>)</span> <span style=color:#888>// 自动配置`包注册`
+</span><span style=color:#888></span>        <span style=color:#555;font-weight:700>@Import</span><span style=color:#333>(</span>AutoConfigurationImportSelector<span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>)</span> <span style=color:#888>// 自动配置导入选择
+</span><span style=color:#888></span>        
+<span style=color:#888>// 获取所有的配置
+</span><span style=color:#888></span>List<span style=color:#333>&lt;</span>String<span style=color:#333>&gt;</span> configurations <span style=color:#333>=</span> getCandidateConfigurations<span style=color:#333>(</span>annotationMetadata<span style=color:#333>,</span> attributes<span style=color:#333>);</span>
+</code></pre></div></li></ul></li></ul><p>获取候选的配置</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>protected</span> List<span style=color:#333>&lt;</span>String<span style=color:#333>&gt;</span> <span style=color:#06b;font-weight:700>getCandidateConfigurations</span><span style=color:#333>(</span>AnnotationMetadata metadata<span style=color:#333>,</span> AnnotationAttributes attributes<span style=color:#333>)</span> <span style=color:#333>{</span>
+	List<span style=color:#333>&lt;</span>String<span style=color:#333>&gt;</span> configurations <span style=color:#333>=</span> SpringFactoriesLoader<span style=color:#333>.</span><span style=color:#00c>loadFactoryNames</span>   <span style=color:#333>(</span>getSpringFactoriesLoaderFactoryClass<span style=color:#333>(),</span>getBeanClassLoader<span style=color:#333>());</span>
+	Assert<span style=color:#333>.</span><span style=color:#00c>notEmpty</span><span style=color:#333>(</span>configurations<span style=color:#333>,</span> <span style=background-color:#fff0f0>&#34;No auto configuration classes found in META-INF/spring.factories. If you &#34;</span> <span style=color:#333>+</span> <span style=background-color:#fff0f0>&#34;are using a custom packaging, make sure that file is correct.&#34;</span><span style=color:#333>);</span>
+	<span style=color:#080;font-weight:700>return</span> configurations<span style=color:#333>;</span>
+<span style=color:#333>}</span>
+</code></pre></div><p>META-INF/spring.factories：自动配置的核心文件。</p><p>结论：springboot所有自动配置都是在启动扫描并加载：spring.factories所有的自动配置类都在这里面，但是不一定生效，要判断条件是否成立，只要导入了对应的start，就有对应的启动器了，有了启动器，我们自动装配就会生效，然后就配置成功。</p><ol><li>springboot在启动的时候，从类路径下/META-INF/spring.factories 获取指定的值。</li><li>将这些自动配置的类导入容器，自动配置就会生效，进行完成自动配置。</li><li>以前我们需要自动配置的东西，现在spring帮我们做了。</li><li>整合javaEE，解决方案和自动配置的东西都在spring-boot-autoconfigure这个包下。</li><li>他会把所有需要导入的组件，以类名的方式返回，这些组件就会被添加到容器中。</li><li>容器中也会存在非常多的xxxAutoConfiguration的文件（@Bean），就是这些类给容器中导入了这个场景需要的组件，并自动配置，@Configuration， JavaConfig。</li><li>有了自动配置类，免去了我们手动编写配置文件的工作。</li></ol><h1 id=springboot-配置>Springboot 配置</h1><p>yaml 可以直接给实体类赋值</p></div></div></div></main><footer>© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a></footer></body></html>

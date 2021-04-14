@@ -408,3 +408,18 @@ Map 传递参数，直接在sql中取出key即可。`parameterType="map"`
 
 多个参数用Map，**或者注解**
 
+## 3.8 思考题
+
+模糊查询怎么写？
+
+1. java代码执行的时候，传递通配符 % %。
+
+```java
+List<User> userList = mapper.getUserLike("%李%");
+```
+
+2. 在sql拼接中使用通配符
+
+```xml
+select * from demo_siahk.user where name like "%"#{value}"%";
+```

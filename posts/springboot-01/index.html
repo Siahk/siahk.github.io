@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.82.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Springboot 01"><meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="微服务阶段 Javase：OOP
+<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.82.1"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Springboot 01"><meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="微服务阶段 Javase：OOP
 mysql：持续化
 html+css+js+jquery+框架：视图，框架，框架不熟练，css不好；
 javaweb：独立开发MVC三层架构的网站：原始
@@ -54,9 +54,128 @@ pom.xml
 </span><span style=color:#888></span>        
 <span style=color:#888>// 获取所有的配置
 </span><span style=color:#888></span>List<span style=color:#333>&lt;</span>String<span style=color:#333>&gt;</span> configurations <span style=color:#333>=</span> getCandidateConfigurations<span style=color:#333>(</span>annotationMetadata<span style=color:#333>,</span> attributes<span style=color:#333>);</span>
-</code></pre></div></li></ul></li></ul><p>获取候选的配置</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>protected</span> List<span style=color:#333>&lt;</span>String<span style=color:#333>&gt;</span> <span style=color:#06b;font-weight:700>getCandidateConfigurations</span><span style=color:#333>(</span>AnnotationMetadata metadata<span style=color:#333>,</span> AnnotationAttributes attributes<span style=color:#333>)</span> <span style=color:#333>{</span>
-	List<span style=color:#333>&lt;</span>String<span style=color:#333>&gt;</span> configurations <span style=color:#333>=</span> SpringFactoriesLoader<span style=color:#333>.</span><span style=color:#00c>loadFactoryNames</span>   <span style=color:#333>(</span>getSpringFactoriesLoaderFactoryClass<span style=color:#333>(),</span>getBeanClassLoader<span style=color:#333>());</span>
-	Assert<span style=color:#333>.</span><span style=color:#00c>notEmpty</span><span style=color:#333>(</span>configurations<span style=color:#333>,</span> <span style=background-color:#fff0f0>&#34;No auto configuration classes found in META-INF/spring.factories. If you &#34;</span> <span style=color:#333>+</span> <span style=background-color:#fff0f0>&#34;are using a custom packaging, make sure that file is correct.&#34;</span><span style=color:#333>);</span>
-	<span style=color:#080;font-weight:700>return</span> configurations<span style=color:#333>;</span>
+</code></pre></div></li></ul></li></ul><p>获取候选的配置</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>protected List&lt;String&gt; getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
+	List&lt;String&gt; configurations = SpringFactoriesLoader.loadFactoryNames   (getSpringFactoriesLoaderFactoryClass(),getBeanClassLoader());
+	Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you &#34; + &#34;are using a custom packaging, make sure that file is correct.&#34;);
+	return configurations;
+}
+</code></pre></div><p>META-INF/spring.factories：自动配置的核心文件。</p><p>结论：springboot所有自动配置都是在启动扫描并加载：spring.factories所有的自动配置类都在这里面，但是不一定生效，要判断条件是否成立，只要导入了对应的start，就有对应的启动器了，有了启动器，我们自动装配就会生效，然后就配置成功。</p><ol><li>springboot在启动的时候，从类路径下/META-INF/spring.factories 获取指定的值。</li><li>将这些自动配置的类导入容器，自动配置就会生效，进行完成自动配置。</li><li>以前我们需要自动配置的东西，现在spring帮我们做了。</li><li>整合javaEE，解决方案和自动配置的东西都在spring-boot-autoconfigure这个包下。</li><li>他会把所有需要导入的组件，以类名的方式返回，这些组件就会被添加到容器中。</li><li>容器中也会存在非常多的xxxAutoConfiguration的文件（@Bean），就是这些类给容器中导入了这个场景需要的组件，并自动配置，@Configuration， JavaConfig。</li><li>有了自动配置类，免去了我们手动编写配置文件的工作。</li></ol><h1 id=springboot-配置>Springboot 配置</h1><p>yaml 可以直接给实体类赋值</p><h1 id=springboot-web-开发>SpringBoot Web 开发</h1><p>jar：webapp</p><p>自动装配</p><p>springboot到底帮我们配置了什么东西，我们能不能修改？能修改那些东西？能不能扩展？</p><ul><li>xxxAutoConfiguration&mldr;向容器中自动配置组件</li><li>xxxProperties：自动配置类，装配配置文件中自定义的一些内容。</li></ul><p>要解决的问题：</p><ul><li>导入静态资源。</li><li>首页。</li><li>jsp，模板引擎。</li><li>装配扩展springmvc</li><li>增删改查。</li><li>拦截器</li><li>国际化</li></ul><h2 id=静态资源>静态资源</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>        <span style=color:#555;font-weight:700>@Override</span>
+		<span style=color:#080;font-weight:700>protected</span> <span style=color:#339;font-weight:700>void</span> <span style=color:#06b;font-weight:700>addResourceHandlers</span><span style=color:#333>(</span>ResourceHandlerRegistry registry<span style=color:#333>)</span> <span style=color:#333>{</span>
+			<span style=color:#080;font-weight:700>super</span><span style=color:#333>.</span><span style=color:#00c>addResourceHandlers</span><span style=color:#333>(</span>registry<span style=color:#333>);</span>
+
+			<span style=color:#080;font-weight:700>if</span> <span style=color:#333>(!</span><span style=color:#080;font-weight:700>this</span><span style=color:#333>.</span><span style=color:#00c>resourceProperties</span><span style=color:#333>.</span><span style=color:#00c>isAddMappings</span><span style=color:#333>())</span> <span style=color:#333>{</span>
+				logger<span style=color:#333>.</span><span style=color:#00c>debug</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;Default resource handling disabled&#34;</span><span style=color:#333>);</span>
+				<span style=color:#080;font-weight:700>return</span><span style=color:#333>;</span>
+			<span style=color:#333>}</span>
+
+			ServletContext servletContext <span style=color:#333>=</span> getServletContext<span style=color:#333>();</span>
+			addResourceHandler<span style=color:#333>(</span>registry<span style=color:#333>,</span> <span style=background-color:#fff0f0>&#34;/webjars/**&#34;</span><span style=color:#333>,</span> <span style=background-color:#fff0f0>&#34;classpath:/META-INF/resources/webjars/&#34;</span><span style=color:#333>);</span>
+			addResourceHandler<span style=color:#333>(</span>registry<span style=color:#333>,</span> <span style=color:#080;font-weight:700>this</span><span style=color:#333>.</span><span style=color:#00c>mvcProperties</span><span style=color:#333>.</span><span style=color:#00c>getStaticPathPattern</span><span style=color:#333>(),</span> <span style=color:#333>(</span>registration<span style=color:#333>)</span> <span style=color:#333>-&gt;</span> <span style=color:#333>{</span>
+				registration<span style=color:#333>.</span><span style=color:#00c>addResourceLocations</span><span style=color:#333>(</span><span style=color:#080;font-weight:700>this</span><span style=color:#333>.</span><span style=color:#00c>resourceProperties</span><span style=color:#333>.</span><span style=color:#00c>getStaticLocations</span><span style=color:#333>());</span>
+				<span style=color:#080;font-weight:700>if</span> <span style=color:#333>(</span>servletContext <span style=color:#333>!=</span> <span style=color:#080;font-weight:700>null</span><span style=color:#333>)</span> <span style=color:#333>{</span>
+					registration<span style=color:#333>.</span><span style=color:#00c>addResourceLocations</span><span style=color:#333>(</span><span style=color:#080;font-weight:700>new</span> ServletContextResource<span style=color:#333>(</span>servletContext<span style=color:#333>,</span> SERVLET_LOCATION<span style=color:#333>));</span>
+				<span style=color:#333>}</span>
+			<span style=color:#333>});</span>
+		<span style=color:#333>}</span>
+</code></pre></div><p>总结：</p><ol><li>在springboot中，我们可以使用以下方式处理静态资源<ul><li>webjars <code>localhost:8080/webjars/</code></li><li>public、staict、resources、/** <code>localhost:8080/</code></li><li>优先级： resources>static(default)>public</li></ul></li></ol><h2 id=首页如何定制>首页如何定制</h2><h2 id=模板引擎>模板引擎</h2><p>结论：需要使用thymeleaf，只需要导入对应的依赖就可以了；我们将html放到我们的templates目录下即可。</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>	<span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>static</span> <span style=color:#080;font-weight:700>final</span> String DEFAULT_PREFIX <span style=color:#333>=</span> <span style=background-color:#fff0f0>&#34;classpath:/templates/&#34;</span><span style=color:#333>;</span>
+	<span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>static</span> <span style=color:#080;font-weight:700>final</span> String DEFAULT_SUFFIX <span style=color:#333>=</span> <span style=background-color:#fff0f0>&#34;.html&#34;</span><span style=color:#333>;</span>
+</code></pre></div><p>thymeleaf的含义：</p><ul><li>Simple expressions:<ul><li>Variable Expressions: ${&mldr;}</li><li>Selection Variable Expressions: *{&mldr;}</li><li>Message Expressions: #{&mldr;}</li><li>Link URL Expressions: @{&mldr;}</li><li>Fragment Expressions: ~{&mldr;}</li></ul></li></ul><ol><li>首页配置：注意点所有的静态资源都需要使用thymeleaf接管。@{}</li><li>页面国际化<ol><li>我们需要配置i18n文件。</li><li>如果我们需要在项目中进行按钮自动切换，我们需要自定义一个组件。<code>LocaleResolver</code></li><li>记得将我们自己写的组件，配置到容器中。<code>@Bean</code></li><li>#{}</li></ol></li><li>登录+拦截器</li><li>员工列表展示<ol><li>提取公共页面<ol><li><code>th:fragment="sidebar"</code></li><li><code>th:replace="~{commons/commons::sidebar}"</code></li><li>如果要传递参数，可以直接使用<code>()</code>传参，接收判断即可。</li></ol></li><li>列表循环展示</li></ol></li></ol><h1 id=mybatis>Mybatis</h1><p>整合包</p><p>mybaits-spring-boot-starter</p><ol><li>导入包</li><li>编写配置文件</li><li>mybatis 配置</li><li>编写sql语句</li><li>service层调用DAO层</li><li>controller 调用service层</li></ol><p>M: 数据和业务
+V: HTML
+C: Controller, 交接</p><h1 id=springsecurity-安全>SpringSecurity （安全）</h1><h2 id=简介>简介</h2><p>记住几个类：</p><ul><li>WebSecurityConfigurerAdapter：自定义Security策略</li><li>AuthenticationManagerBuilder：自定义认证策略</li><li>@EnableWebSecurity：开启Security模式</li></ul><p>Spring Security的两个主要目标是“认证”和“授权”（访问控制）。</p><p>“认证”（Authentication）</p><p>“授权”（Authorization）</p><p>这个两个概念是通用的，而不是只在Spring Security中存在</p><h1 id=shiro>Shiro</h1><h1 id=1-什么是shiro>1. 什么是Shiro？</h1><ul><li>Apache Shiro 是一个Java的安全（权限）框架。</li><li>Shiro 可以非常容易的开发出足够好的应用，其不仅可以用在JAVASE环境，也可以用在JAVAEE环境</li><li>Shiro可以完成，认证，授权，加密，会话管理，Web集成，缓存等。</li><li>下载地址 <a href=http://shiro.apache.org/>http://shiro.apache.org/</a></li></ul><ol><li>导入依赖</li><li>配置文件</li><li>HelloWorld</li></ol><p>spring-security都有。</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>Subeject currentUser <span style=color:#333>=</span> SecurityUtils<span style=color:#333>.</span><span style=color:#00c>getSubject</span><span style=color:#333>();</span>
+Session session <span style=color:#333>=</span> currentUser<span style=color:#333>.</span><span style=color:#00c>getSession</span><span style=color:#333>();</span>
+currentUser<span style=color:#333>.</span><span style=color:#00c>isAuthenticated</span><span style=color:#333>();</span>
+currentUser<span style=color:#333>.</span><span style=color:#00c>getPrincipal</span><span style=color:#333>();</span>
+currentUser<span style=color:#333>.</span><span style=color:#00c>hasRole</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;schwartz&#34;</span><span style=color:#333>);</span>
+currentUser<span style=color:#333>.</span><span style=color:#00c>isPermistted</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;lightsaber:wield&#34;</span><span style=color:#333>);</span>
+currentUser<span style=color:#333>.</span><span style=color:#00c>logout</span><span style=color:#333>();</span>
+</code></pre></div><p>Springboot中集成</p><h1 id=swagger>Swagger</h1><h2 id=springboot-集成-swagger>SpringBoot 集成 Swagger</h2><ol><li>新建一个SpringBoot=web项目</li><li>导入相关依赖</li></ol><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#333>&lt;!--</span> https<span style=color:#333>:</span><span style=color:#888>//mvnrepository.com/artifact/io.springfox/springfox-swagger2 --&gt;
+</span><span style=color:#888></span><span style=color:#333>&lt;</span>dependency<span style=color:#333>&gt;</span>
+    <span style=color:#333>&lt;</span>groupId<span style=color:#333>&gt;</span>io<span style=color:#333>.</span><span style=color:#00c>springfox</span><span style=color:#333>&lt;/</span>groupId<span style=color:#333>&gt;</span>
+    <span style=color:#333>&lt;</span>artifactId<span style=color:#333>&gt;</span>springfox<span style=color:#333>-</span>swagger2<span style=color:#333>&lt;/</span>artifactId<span style=color:#333>&gt;</span>
+    <span style=color:#333>&lt;</span>version<span style=color:#333>&gt;</span>3<span style=color:#333>.</span><span style=color:#00c>0</span><span style=color:#333>.</span><span style=color:#00c>0</span><span style=color:#333>&lt;/</span>version<span style=color:#333>&gt;</span>
+<span style=color:#333>&lt;/</span>dependency<span style=color:#333>&gt;</span>
+
+<span style=color:#333>&lt;!--</span> https<span style=color:#333>:</span><span style=color:#888>//mvnrepository.com/artifact/io.springfox/springfox-swagger-ui --&gt;
+</span><span style=color:#888></span><span style=color:#333>&lt;</span>dependency<span style=color:#333>&gt;</span>
+    <span style=color:#333>&lt;</span>groupId<span style=color:#333>&gt;</span>io<span style=color:#333>.</span><span style=color:#00c>springfox</span><span style=color:#333>&lt;/</span>groupId<span style=color:#333>&gt;</span>
+    <span style=color:#333>&lt;</span>artifactId<span style=color:#333>&gt;</span>springfox<span style=color:#333>-</span>swagger<span style=color:#333>-</span>ui<span style=color:#333>&lt;/</span>artifactId<span style=color:#333>&gt;</span>
+    <span style=color:#333>&lt;</span>version<span style=color:#333>&gt;</span>3<span style=color:#333>.</span><span style=color:#00c>0</span><span style=color:#333>.</span><span style=color:#00c>0</span><span style=color:#333>&lt;/</span>version<span style=color:#333>&gt;</span>
+<span style=color:#333>&lt;/</span>dependency<span style=color:#333>&gt;</span>
+
+</code></pre></div><ol start=3><li>编写一个hello工程</li><li>配置Swagger==>Config</li></ol><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#555;font-weight:700>@Configuration</span>
+<span style=color:#555;font-weight:700>@EnableSwagger2</span> <span style=color:#888>// 开启Swagger2
+</span><span style=color:#888></span><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>SwaggerConfig</span> <span style=color:#333>{</span>
 <span style=color:#333>}</span>
-</code></pre></div><p>META-INF/spring.factories：自动配置的核心文件。</p><p>结论：springboot所有自动配置都是在启动扫描并加载：spring.factories所有的自动配置类都在这里面，但是不一定生效，要判断条件是否成立，只要导入了对应的start，就有对应的启动器了，有了启动器，我们自动装配就会生效，然后就配置成功。</p><ol><li>springboot在启动的时候，从类路径下/META-INF/spring.factories 获取指定的值。</li><li>将这些自动配置的类导入容器，自动配置就会生效，进行完成自动配置。</li><li>以前我们需要自动配置的东西，现在spring帮我们做了。</li><li>整合javaEE，解决方案和自动配置的东西都在spring-boot-autoconfigure这个包下。</li><li>他会把所有需要导入的组件，以类名的方式返回，这些组件就会被添加到容器中。</li><li>容器中也会存在非常多的xxxAutoConfiguration的文件（@Bean），就是这些类给容器中导入了这个场景需要的组件，并自动配置，@Configuration， JavaConfig。</li><li>有了自动配置类，免去了我们手动编写配置文件的工作。</li></ol><h1 id=springboot-配置>Springboot 配置</h1><p>yaml 可以直接给实体类赋值</p></div></div></div></main><footer>© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a></footer></body></html>
+</code></pre></div><ol start=5><li>测试运行</li></ol><h2 id=配置swagger>配置Swagger</h2><p>Swagger的Bean实例Docket</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#080;font-weight:700>public</span> <span style=color:#080;font-weight:700>class</span> <span style=color:#b06;font-weight:700>SwaggerConfig</span> <span style=color:#333>{</span>
+    <span style=color:#888>// 配置了Swagger的docket的bean实例
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Bean</span>
+    <span style=color:#080;font-weight:700>public</span> Docket <span style=color:#06b;font-weight:700>docket</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        <span style=color:#080;font-weight:700>return</span> <span style=color:#080;font-weight:700>new</span> Docket<span style=color:#333>(</span>DocumentationType<span style=color:#333>.</span><span style=color:#00c>SWAGGER_2</span><span style=color:#333>)</span>
+                <span style=color:#333>.</span><span style=color:#00c>apiInfo</span><span style=color:#333>(</span>apiInfo<span style=color:#333>());</span>
+    <span style=color:#333>}</span>
+    <span style=color:#080;font-weight:700>private</span> ApiInfo <span style=color:#06b;font-weight:700>apiInfo</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        <span style=color:#888>// 作者信息
+</span><span style=color:#888></span>        <span style=color:#080;font-weight:700>final</span> Contact DEFAULT_CONTACT <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> Contact<span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;heng&#34;</span><span style=color:#333>,</span> <span style=background-color:#fff0f0>&#34;&#34;</span><span style=color:#333>,</span> <span style=background-color:#fff0f0>&#34;&#34;</span><span style=color:#333>);</span>
+        <span style=color:#080;font-weight:700>return</span> <span style=color:#080;font-weight:700>new</span> ApiInfo<span style=color:#333>(</span>
+                <span style=background-color:#fff0f0>&#34;heng&#39;s swagger api documentation&#34;</span><span style=color:#333>,</span>
+                <span style=background-color:#fff0f0>&#34;Api Documentation&#34;</span><span style=color:#333>,</span>
+                <span style=background-color:#fff0f0>&#34;1.0&#34;</span><span style=color:#333>,</span>
+                <span style=background-color:#fff0f0>&#34;urn:tos&#34;</span><span style=color:#333>,</span>
+                DEFAULT_CONTACT<span style=color:#333>,</span>
+                <span style=background-color:#fff0f0>&#34;Apache 2.0&#34;</span><span style=color:#333>,</span>
+                <span style=background-color:#fff0f0>&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;</span><span style=color:#333>,</span>
+                <span style=color:#080;font-weight:700>new</span> ArrayList<span style=color:#333>&lt;</span>VendorExtension<span style=color:#333>&gt;());</span>
+    <span style=color:#333>}</span>
+<span style=color:#333>}</span>
+</code></pre></div><h2 id=swagger配置扫描接口>Swagger配置扫描接口</h2><p>Docket.select()</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>    <span style=color:#555;font-weight:700>@Bean</span>
+    <span style=color:#080;font-weight:700>public</span> Docket <span style=color:#06b;font-weight:700>docket</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        <span style=color:#080;font-weight:700>return</span> <span style=color:#080;font-weight:700>new</span> Docket<span style=color:#333>(</span>DocumentationType<span style=color:#333>.</span><span style=color:#00c>SWAGGER_2</span><span style=color:#333>)</span>
+                <span style=color:#333>.</span><span style=color:#00c>apiInfo</span><span style=color:#333>(</span>apiInfo<span style=color:#333>())</span>
+                <span style=color:#333>.</span><span style=color:#00c>select</span><span style=color:#333>()</span>
+                <span style=color:#888>// RequestHandlerSelectors，配置要扫描接口的方式、
+</span><span style=color:#888></span>                <span style=color:#888>// basePackage，指定要扫描的包
+</span><span style=color:#888></span>                <span style=color:#888>// any()，扫描全部
+</span><span style=color:#888></span>                <span style=color:#888>// none()，都不扫描
+</span><span style=color:#888></span>                <span style=color:#888>// withClassAnnotation()，扫描类上的注解，参数是一个注解的反射对象
+</span><span style=color:#888></span>                <span style=color:#888>// withMethodAnnotation()，扫描方法上的注解
+</span><span style=color:#888></span>                <span style=color:#333>.</span><span style=color:#00c>apis</span><span style=color:#333>(</span>RequestHandlerSelectors<span style=color:#333>.</span><span style=color:#00c>basePackage</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;com.heng.swagger.controller&#34;</span><span style=color:#333>))</span>
+                <span style=color:#888>// paths()，过滤路径
+</span><span style=color:#888></span>                <span style=color:#333>.</span><span style=color:#00c>paths</span><span style=color:#333>(</span>PathSelectors<span style=color:#333>.</span><span style=color:#00c>ant</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;/heng/**&#34;</span><span style=color:#333>))</span>
+                <span style=color:#333>.</span><span style=color:#00c>build</span><span style=color:#333>();</span>
+    <span style=color:#333>}</span>
+</code></pre></div><p>配置是否启动Swagger</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>    <span style=color:#888>// 配置了Swagger的docket的bean实例
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Bean</span>
+    <span style=color:#080;font-weight:700>public</span> Docket <span style=color:#06b;font-weight:700>docket</span><span style=color:#333>()</span> <span style=color:#333>{</span>
+        <span style=color:#080;font-weight:700>return</span> <span style=color:#080;font-weight:700>new</span> Docket<span style=color:#333>(</span>DocumentationType<span style=color:#333>.</span><span style=color:#00c>SWAGGER_2</span><span style=color:#333>)</span>
+                <span style=color:#333>.</span><span style=color:#00c>apiInfo</span><span style=color:#333>(</span>apiInfo<span style=color:#333>())</span>
+                <span style=color:#333>.</span><span style=color:#00c>enable</span><span style=color:#333>(</span><span style=color:#080;font-weight:700>false</span><span style=color:#333>)</span> <span style=color:#888>// enable：是否启动Swagger；如果为false，则Swagger不能在浏览器中访问。
+</span><span style=color:#888></span>                <span style=color:#333>.</span><span style=color:#00c>select</span><span style=color:#333>()</span>
+                <span style=color:#333>.</span><span style=color:#00c>apis</span><span style=color:#333>(</span>RequestHandlerSelectors<span style=color:#333>.</span><span style=color:#00c>basePackage</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;com.heng.swagger.controller&#34;</span><span style=color:#333>))</span>
+                <span style=color:#888>// .paths(PathSelectors.ant(&#34;/heng/**&#34;))
+</span><span style=color:#888></span>                <span style=color:#333>.</span><span style=color:#00c>build</span><span style=color:#333>();</span>
+    <span style=color:#333>}</span>
+</code></pre></div><p>swagger如何只在生产环境中使用，而发布时不使用</p><ul><li>判断是否是生产环境 flags = false</li><li>注入enble(flags)</li></ul><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>    <span style=color:#888>// 配置了Swagger的docket的bean实例
+</span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@Bean</span>
+    <span style=color:#080;font-weight:700>public</span> Docket <span style=color:#06b;font-weight:700>docket</span><span style=color:#333>(</span>Environment environment<span style=color:#333>)</span> <span style=color:#333>{</span>
+        <span style=color:#888>// 设置要显示的Swagger环境
+</span><span style=color:#888></span>        Profiles profiles <span style=color:#333>=</span> Profiles<span style=color:#333>.</span><span style=color:#00c>of</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;dev&#34;</span><span style=color:#333>,</span><span style=background-color:#fff0f0>&#34;test&#34;</span><span style=color:#333>);</span>
+        <span style=color:#888>// 通过environment.acceptsProfiles判断是否处在自己设定的环境当中
+</span><span style=color:#888></span>        <span style=color:#339;font-weight:700>boolean</span> flags <span style=color:#333>=</span> environment<span style=color:#333>.</span><span style=color:#00c>acceptsProfiles</span><span style=color:#333>(</span>profiles<span style=color:#333>);</span>
+
+        <span style=color:#080;font-weight:700>return</span> <span style=color:#080;font-weight:700>new</span> Docket<span style=color:#333>(</span>DocumentationType<span style=color:#333>.</span><span style=color:#00c>SWAGGER_2</span><span style=color:#333>)</span>
+                <span style=color:#333>.</span><span style=color:#00c>apiInfo</span><span style=color:#333>(</span>apiInfo<span style=color:#333>())</span>
+                <span style=color:#333>.</span><span style=color:#00c>enable</span><span style=color:#333>(</span>flags<span style=color:#333>)</span> <span style=color:#888>// enable：是否启动Swagger；如果为false，则Swagger不能在浏览器中访问。
+</span><span style=color:#888></span>                <span style=color:#333>.</span><span style=color:#00c>select</span><span style=color:#333>()</span>
+                <span style=color:#333>.</span><span style=color:#00c>apis</span><span style=color:#333>(</span>RequestHandlerSelectors<span style=color:#333>.</span><span style=color:#00c>basePackage</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;com.heng.swagger.controller&#34;</span><span style=color:#333>))</span>
+                <span style=color:#888>// .paths(PathSelectors.ant(&#34;/heng/**&#34;))
+</span><span style=color:#888></span>                <span style=color:#333>.</span><span style=color:#00c>build</span><span style=color:#333>();</span>
+    <span style=color:#333>}</span>
+</code></pre></div><p>配置API文档的分组</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#333>.</span><span style=color:#00c>gropName</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;heng&#34;</span><span style=color:#333>)</span>
+</code></pre></div><p>如何配置多个分组；多个Docket实例即可</p><h1 id=任务>任务</h1><p>异步任务</p><p>定时任务 表达式</p><p>邮件发送</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>TaskScheduler 任务调度者
+TaskExecuter 任务执行者
+
+<span style=color:#555;font-weight:700>@EnableScheduling</span> <span style=color:#888>// 开启定时功能的注解
+</span><span style=color:#888></span><span style=color:#555;font-weight:700>@Scheduled</span> <span style=color:#888>//什么时候执行 
+</span><span style=color:#888></span>
+Cron表达式
+</code></pre></div></div></div></div></main><footer>© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a></footer></body></html>

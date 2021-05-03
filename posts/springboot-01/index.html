@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.82.1"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Springboot 01"><meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="微服务阶段 Javase：OOP
+<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.83.1"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Springboot 01"><meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="微服务阶段 Javase：OOP
 mysql：持续化
 html+css+js+jquery+框架：视图，框架，框架不熟练，css不好；
 javaweb：独立开发MVC三层架构的网站：原始
@@ -51,7 +51,7 @@ pom.xml
 </span><span style=color:#888></span>    <span style=color:#555;font-weight:700>@AutoConfigurationPackage</span> <span style=color:#888>// 自动配置包
 </span><span style=color:#888></span>        <span style=color:#555;font-weight:700>@Import</span><span style=color:#333>(</span>AutoConfigurationPackages<span style=color:#333>.</span><span style=color:#00c>Registrar</span><span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>)</span> <span style=color:#888>// 自动配置`包注册`
 </span><span style=color:#888></span>        <span style=color:#555;font-weight:700>@Import</span><span style=color:#333>(</span>AutoConfigurationImportSelector<span style=color:#333>.</span><span style=color:#00c>class</span><span style=color:#333>)</span> <span style=color:#888>// 自动配置导入选择
-</span><span style=color:#888></span>        
+</span><span style=color:#888></span>
 <span style=color:#888>// 获取所有的配置
 </span><span style=color:#888></span>List<span style=color:#333>&lt;</span>String<span style=color:#333>&gt;</span> configurations <span style=color:#333>=</span> getCandidateConfigurations<span style=color:#333>(</span>annotationMetadata<span style=color:#333>,</span> attributes<span style=color:#333>);</span>
 </code></pre></div></li></ul></li></ul><p>获取候选的配置</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>protected List&lt;String&gt; getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {

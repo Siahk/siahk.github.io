@@ -1,12 +1,73 @@
-<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.83.1"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta property="og:title" content="Socket"><meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="Socket 用法详解 1 构造 Socket 构造方法的重载方式
-Socket(); Socket(InetAddress address, int port) throws UnknownHostException, IOExpection; …"><meta property="og:title" content="Socket"><meta property="og:description" content="Socket 用法详解 1 构造 Socket 构造方法的重载方式
+<!doctype html><html lang=en><head>
+<meta name=generator content="Hugo 0.88.1">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta property="og:title" content="Socket">
+<meta name=keywords content="hugo,vitae,theme,static,blog"><meta name=description content="Socket 用法详解 1 构造 Socket 构造方法的重载方式
+Socket(); Socket(InetAddress address, int port) throws UnknownHostException, IOExpection; …"><meta property="og:title" content="Socket">
+<meta property="og:description" content="Socket 用法详解 1 构造 Socket 构造方法的重载方式
 Socket(); Socket(InetAddress address, int port) throws UnknownHostException, IOExpection; Socket(InetAddress address, int port, InetAddress localAddr, int localPort) throws IOExpection; Socket(String host, int port) throws UnknownHostException, IOException; Socket(String host, int port, InetAddress localAddr, int localPort) throws IOException; Socket(Proxy proxy); 1.1 设定等待建立连接的超时时间 Socket socket = new Socket(); SocketAddress remoteAddr=new InetSocketAddress(&#34;localhost&#34;, 8000); socket.connect(remoteAddr, 60000); // 等待建立连接的超时时间为1分钟 SocketAddress 类 表示一个套接字地址
  Socket.connect(SocketAddress endpoint, int timeout) 方法：负责连接服务器
- 参数endpoint：指定服务器的地址。参数timeout：设定的超时时间，以ms为单位；设为0，表示永远不会超时。  1."><meta property="og:type" content="article"><meta property="og:url" content="http://siahk.github.io/posts/socket/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-04-11T14:20:18+08:00"><meta property="article:modified_time" content="2021-04-11T14:20:18+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Socket"><meta name=twitter:description content="Socket 用法详解 1 构造 Socket 构造方法的重载方式
+ 参数endpoint：指定服务器的地址。参数timeout：设定的超时时间，以ms为单位；设为0，表示永远不会超时。  1.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://siahk.github.io/posts/socket/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-04-11T14:20:18+08:00">
+<meta property="article:modified_time" content="2021-04-11T14:20:18+08:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Socket">
+<meta name=twitter:description content="Socket 用法详解 1 构造 Socket 构造方法的重载方式
 Socket(); Socket(InetAddress address, int port) throws UnknownHostException, IOExpection; Socket(InetAddress address, int port, InetAddress localAddr, int localPort) throws IOExpection; Socket(String host, int port) throws UnknownHostException, IOException; Socket(String host, int port, InetAddress localAddr, int localPort) throws IOException; Socket(Proxy proxy); 1.1 设定等待建立连接的超时时间 Socket socket = new Socket(); SocketAddress remoteAddr=new InetSocketAddress(&#34;localhost&#34;, 8000); socket.connect(remoteAddr, 60000); // 等待建立连接的超时时间为1分钟 SocketAddress 类 表示一个套接字地址
  Socket.connect(SocketAddress endpoint, int timeout) 方法：负责连接服务器
- 参数endpoint：指定服务器的地址。参数timeout：设定的超时时间，以ms为单位；设为0，表示永远不会超时。  1."><link rel=stylesheet type=text/css media=screen href=/css/normalize.css><link rel=stylesheet type=text/css media=screen href=/css/main.css><link rel=stylesheet type=text/css media=screen href=/css/all.css><link rel=stylesheet href=/css/katex.min.css crossorigin=anonymous><script defer src=/js/katex.min.js integrity=sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz crossorigin=anonymous></script><script defer src=/js/auto-render.min.js integrity=sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI crossorigin=anonymous onload=renderMathInElement(document.body)></script><title>Socket | Siahk'Blog</title></head><body><header><div id=avatar><a href=http://siahk.github.io/><img src=/images/%e5%a4%a7%e6%88%b7%e7%88%b1.jpg alt="Siahk'Blog"></a></div><div id=titletext><h2 id=title><a href=http://siahk.github.io/>Siahk'Blog</a></h2></div><div id=title-description><p id=subtitle>Later equals never.</p><div id=social><nav><ul><li><a href=https://github.com/Siahk><i title=Github class="icons fab fa-github"></i></a></li><li><a href=/index.xml><i title=RSS class="icons fas fa-rss"></i></a></li></ul></nav></div></div><div id=mainmenu><nav><ul><li><a href=/>Home</a></li><li><a href=/posts>Blogs</a></li><li><a href=/about>About</a></li><li><a href=/tags>Tags</a></li><li><a href=/categories>Categories</a></li></ul></nav></div></header><main><div class=post><div class=author></div><div class=post-header><div class=meta><div class=date><span class=day>11</span>
-<span class=rest>Apr 2021</span></div></div><div class=matter><h1 class=title>Socket</h1></div></div><div class=markdown><h1 id=socket-用法详解>Socket 用法详解</h1><h2 id=1-构造-socket>1 构造 Socket</h2><p>构造方法的重载方式</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>Socket<span style=color:#333>();</span>
+ 参数endpoint：指定服务器的地址。参数timeout：设定的超时时间，以ms为单位；设为0，表示永远不会超时。  1.">
+<link rel=stylesheet type=text/css media=screen href=/css/normalize.css>
+<link rel=stylesheet type=text/css media=screen href=/css/main.css>
+<link rel=stylesheet type=text/css media=screen href=/css/all.css>
+<link rel=stylesheet href=/css/katex.min.css crossorigin=anonymous>
+<script defer src=/js/katex.min.js integrity=sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz crossorigin=anonymous></script>
+<script defer src=/js/auto-render.min.js integrity=sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI crossorigin=anonymous onload=renderMathInElement(document.body)></script><title>Socket | Siahk'Blog</title>
+</head>
+<body><header>
+<div id=titletext><h2 id=title><a href=http://siahk.github.io/>Siahk'Blog</a></h2></div>
+<div id=title-description><p id=subtitle>Later equals never.</p><div id=social>
+<nav>
+<ul>
+<li><a href=https://github.com/Siahk><i title=Github class="icons fab fa-github"></i></a></li>
+<li><a href=/index.xml><i title=RSS class="icons fas fa-rss"></i></a></li></ul>
+</nav>
+</div>
+</div>
+<div id=mainmenu>
+<nav>
+<ul>
+<li><a href=/>Home</a></li>
+<li><a href=/posts>Blogs</a></li>
+<li><a href=/about>About</a></li>
+<li><a href=/tags>Tags</a></li>
+<li><a href=/categories>Categories</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main><div class=post>
+<div class=author>
+</div>
+<div class=post-header>
+<div class=meta>
+<div class=date>
+<span class=day>11</span>
+<span class=rest>Apr 2021</span>
+</div>
+</div>
+<div class=matter>
+<h1 class=title>Socket</h1>
+</div>
+</div>
+<div class=markdown>
+<h1 id=socket-用法详解>Socket 用法详解</h1>
+<h2 id=1-构造-socket>1 构造 Socket</h2>
+<p>构造方法的重载方式</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>Socket<span style=color:#333>();</span>
 
 Socket<span style=color:#333>(</span>InetAddress address<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> port<span style=color:#333>)</span> <span style=color:#080;font-weight:700>throws</span> UnknownHostException<span style=color:#333>,</span> IOExpection<span style=color:#333>;</span>
 
@@ -17,16 +78,27 @@ Socket<span style=color:#333>(</span>String host<span style=color:#333>,</span> 
 Socket<span style=color:#333>(</span>String host<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> port<span style=color:#333>,</span> InetAddress localAddr<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> localPort<span style=color:#333>)</span> <span style=color:#080;font-weight:700>throws</span> IOException<span style=color:#333>;</span>
 
 Socket<span style=color:#333>(</span>Proxy proxy<span style=color:#333>);</span>
-</code></pre></div><h2 id=11-设定等待建立连接的超时时间>1.1 设定等待建立连接的超时时间</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>Socket socket <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> Socket<span style=color:#333>();</span>
+</code></pre></div><h2 id=11-设定等待建立连接的超时时间>1.1 设定等待建立连接的超时时间</h2>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>Socket socket <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> Socket<span style=color:#333>();</span>
 SocketAddress remoteAddr<span style=color:#333>=</span><span style=color:#080;font-weight:700>new</span> InetSocketAddress<span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;localhost&#34;</span><span style=color:#333>,</span> 8000<span style=color:#333>);</span>
 socket<span style=color:#333>.</span><span style=color:#00c>connect</span><span style=color:#333>(</span>remoteAddr<span style=color:#333>,</span> 60000<span style=color:#333>);</span> <span style=color:#888>// 等待建立连接的超时时间为1分钟
-</span></code></pre></div><p><strong>SocketAddress 类</strong> 表示一个套接字地址</p><blockquote><p><code>Socket.connect(SocketAddress endpoint, int timeout)</code> 方法：负责连接服务器</p><blockquote><p>参数endpoint：指定服务器的地址。
-参数timeout：设定的超时时间，以ms为单位；设为0，表示永远不会超时。</p></blockquote></blockquote><h2 id=12-设定服务器地址>1.2 设定服务器地址</h2><p>构造方法：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// 第 1 个参数 address 表示主机的 IP 地址
+</span></code></pre></div><p><strong>SocketAddress 类</strong> 表示一个套接字地址</p>
+<blockquote>
+<p><code>Socket.connect(SocketAddress endpoint, int timeout)</code> 方法：负责连接服务器</p>
+<blockquote>
+<p>参数endpoint：指定服务器的地址。
+参数timeout：设定的超时时间，以ms为单位；设为0，表示永远不会超时。</p>
+</blockquote>
+</blockquote>
+<h2 id=12-设定服务器地址>1.2 设定服务器地址</h2>
+<p>构造方法：</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// 第 1 个参数 address 表示主机的 IP 地址
 </span><span style=color:#888></span>Socket<span style=color:#333>(</span>InetAddress address<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> port<span style=color:#333>);</span>
 
 <span style=color:#888>// 第 1 个参数 address 表示主机名字
 </span><span style=color:#888></span>Socket<span style=color:#333>(</span>String host<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> port<span style=color:#333>);</span>
-</code></pre></div><p>静态工厂方法——表示主机的IP地址：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// 返回本地主机的 IP 地址
+</code></pre></div><p>静态工厂方法——表示主机的IP地址：</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// 返回本地主机的 IP 地址
 </span><span style=color:#888></span>InetAddress addr1 <span style=color:#333>=</span> InetAddress<span style=color:#333>.</span><span style=color:#00c>getLocalHost</span><span style=color:#333>();</span>
 
 <span style=color:#888>// 返回代表“222.34.5.7”的 IPv4 地址
@@ -37,14 +109,52 @@ socket<span style=color:#333>.</span><span style=color:#00c>connect</span><span 
 
 <span style=color:#888>// 返回主机名为“www.javathinker.net”的 IP 地址
 </span><span style=color:#888></span>InetAddress addr4 <span style=color:#333>=</span> InetAddress<span style=color:#333>.</span><span style=color:#00c>getByName</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;www.javathinker.net&#34;</span><span style=color:#333>);</span>
-</code></pre></div><h2 id=13-设定客户端的地址>1.3 设定客户端的地址</h2><p>显示地设置客户端的IP地址和端口：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// 参数 localAddr 和 localPort 用来设置客户端的 IP 地址和端口
+</code></pre></div><h2 id=13-设定客户端的地址>1.3 设定客户端的地址</h2>
+<p>显示地设置客户端的IP地址和端口：</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>// 参数 localAddr 和 localPort 用来设置客户端的 IP 地址和端口
 </span><span style=color:#888></span>
 Socket<span style=color:#333>(</span>InetAddress address<span style=color:#333>,</span><span style=color:#339;font-weight:700>int</span> port<span style=color:#333>,</span> InetAddress localAddr<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> localPort<span style=color:#333>)</span> <span style=color:#080;font-weight:700>throws</span> IOExpection<span style=color:#333>;</span>
 
 Socket<span style=color:#333>(</span>String host<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> port<span style=color:#333>,</span> InetAddress localAddr<span style=color:#333>,</span> <span style=color:#339;font-weight:700>int</span> localPort<span style=color:#333>)</span> <span style=color:#080;font-weight:700>throws</span> IOException<span style=color:#333>;</span>
-</code></pre></div><p>构造Socket对象：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>InetAddress remoteAddr <span style=color:#333>=</span> InetAddress<span style=color:#333>.</span><span style=color:#00c>getByNmae</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;112.5.4.45&#34;</span><span style=color:#333>);</span>
+</code></pre></div><p>构造Socket对象：</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>InetAddress remoteAddr <span style=color:#333>=</span> InetAddress<span style=color:#333>.</span><span style=color:#00c>getByNmae</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;112.5.4.45&#34;</span><span style=color:#333>);</span>
 InetAddress localAddr <span style=color:#333>=</span> InetAddress<span style=color:#333>.</span><span style=color:#00c>getByName</span><span style=color:#333>(</span><span style=background-color:#fff0f0>&#34;112.5.4.3&#34;</span><span style=color:#333>);</span>
 
 <span style=color:#888>// 客户端使用端口 2345
 </span><span style=color:#888></span>Socket socket <span style=color:#333>=</span> <span style=color:#080;font-weight:700>new</span> Socket<span style=color:#333>(</span>remoteAddr<span style=color:#333>,</span> 8000<span style=color:#333>,</span> localAddr<span style=color:#333>,</span> 2345<span style=color:#333>);</span>
-</code></pre></div><h2 id=14-客户连接服务器时可能抛出的异常>1.4 客户连接服务器时可能抛出的异常</h2><p>Socket的构造方法请求连接服务器时，可能出现的异常：</p><ul><li>UnknownHostException：如果无法识别主机名字或IP地址，就会抛出这种异常。</li><li>ConnectException：如果没有没有服务器进监听指定的端口，或者服务器进程拒绝连接，就会抛出这种异常。</li><li>SocketTimeoutException：如果等待连接超时，就会抛出这种异常。</li><li>BindException：如果无法把Socket对象与指定的本地IP地址或端口半丁，就会抛出这种异常。</li></ul><hr><ul><li>IOException<ul><li>UnknownHostException</li><li>InterruptedIOException<ul><li>SocketTimeoutException</li></ul></li><li>SocketException<ul><li>BindException</li><li>ConnectException</li></ul></li></ul></li></ul><hr></div></div></div></main><footer>© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a></footer></body></html>
+</code></pre></div><h2 id=14-客户连接服务器时可能抛出的异常>1.4 客户连接服务器时可能抛出的异常</h2>
+<p>Socket的构造方法请求连接服务器时，可能出现的异常：</p>
+<ul>
+<li>UnknownHostException：如果无法识别主机名字或IP地址，就会抛出这种异常。</li>
+<li>ConnectException：如果没有没有服务器进监听指定的端口，或者服务器进程拒绝连接，就会抛出这种异常。</li>
+<li>SocketTimeoutException：如果等待连接超时，就会抛出这种异常。</li>
+<li>BindException：如果无法把Socket对象与指定的本地IP地址或端口半丁，就会抛出这种异常。</li>
+</ul>
+<hr>
+<ul>
+<li>IOException
+<ul>
+<li>UnknownHostException</li>
+<li>InterruptedIOException
+<ul>
+<li>SocketTimeoutException</li>
+</ul>
+</li>
+<li>SocketException
+<ul>
+<li>BindException</li>
+<li>ConnectException</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+</div>
+</div></div>
+</main>
+<footer>
+© Copyright notice | <a href=https://github.com/dataCobra/hugo-vitae>Vitae</a> theme for <a href=https://gohugo.io>Hugo</a>
+</footer>
+</body>
+</html>
